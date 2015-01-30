@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1053f6e-34ab-4790-acf9-fdd7063bac5e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/EmailSender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NotifyBidders.iml" afterPath="$PROJECT_DIR$/NotifyBidders.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EmailSender.java" afterPath="$PROJECT_DIR$/src/EmailSender.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NotifyBidders.java" afterPath="$PROJECT_DIR$/src/NotifyBidders.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NotifyBidders.iws" />
@@ -32,21 +30,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="NotifyBidders.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NotifyBidders.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NotifyBidders.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="141" max-vertical-offset="731">
-              <caret line="25" column="57" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
-              <folding />
+            <state vertical-scroll-proportion="0.6785714" vertical-offset="0" max-vertical-offset="765">
+              <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EmailSender.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EmailSender.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EmailSender.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14285715" vertical-offset="0" max-vertical-offset="1360">
-              <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
+              <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -441,26 +441,29 @@
     <MESSAGE value="Added JeroMQ jar, made connection to queue" />
     <MESSAGE value="Subscribed to NotifyBidder command, added parse function to get id and parameters from received message" />
     <MESSAGE value="Added functionality to get the item details from the database" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added functionality to get the item details from the database" />
+    <MESSAGE value="Added functionality to send emails, added jar for email functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added functionality to send emails, added jar for email functionality" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/NotifyBidders.java">
+    <entry file="file://$PROJECT_DIR$/src/EmailSender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="141" max-vertical-offset="731">
-          <caret line="25" column="57" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
+          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EmailSender.java">
+    <entry file="file://$PROJECT_DIR$/src/NotifyBidders.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14285715" vertical-offset="0" max-vertical-offset="1360">
-          <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
-          <folding />
+        <state vertical-scroll-proportion="0.6785714" vertical-offset="0" max-vertical-offset="765">
+          <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

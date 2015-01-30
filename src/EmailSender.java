@@ -1,13 +1,17 @@
 import com.mongodb.*;
-
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
-/**
- * Created by Conor on 30/01/2015.
+/*
+    @author Conor Hayes
+    Code for interacting with MongoDB and sending email
+    Java mail -> http://www.tutorialspoint.com/java/java_sending_email.htm
+                 http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
+    MongoDB -> http://docs.mongodb.org/ecosystem/tutorial/getting-started-with-java-driver/
  */
+
 public class EmailSender {
     private final String SERVER_NAME = "localhost";
     private final int PORT_NUMBER = 27018;

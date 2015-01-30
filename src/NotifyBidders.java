@@ -1,10 +1,12 @@
-import com.mongodb.*;
-import java.net.UnknownHostException;
-import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.*;
 import org.jeromq.ZMQ;
 import org.jeromq.ZMQ.*;
+
+/*
+    @author Conor Hayes
+    The official documentation was consulted for the third party library 0mq used in this class
+    0mq pub -> https://github.com/zeromq/jeromq/blob/master/src/test/java/guide/pathopub.java
+    0mq sub -> https://github.com/zeromq/jeromq/blob/master/src/test/java/guide/pathosub.java
+ */
 
 public class NotifyBidders {
     private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001";

@@ -36,7 +36,8 @@ public class NotifyBidders {
     private void publishAcknowledgement(String message){
         Socket publisher = context.socket(ZMQ.PUB);
         publisher.bind(PUBLISHER_ADDRESS);
-        publisher.send(message.getBytes());
+        String msg = "ACK: " + message;
+        publisher.send(msg.getBytes());
         System.out.println("Acknowledgement sent...");
     }
 

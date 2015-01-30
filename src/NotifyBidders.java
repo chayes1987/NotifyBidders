@@ -25,7 +25,14 @@ public class NotifyBidders {
         }
     }
 
-    private void connect(){
+    private String generateMessageBody(String id) {
+        DBObject item = getItem(id);
+        DBObject itemDetails = (DBObject)item.get("item");
+        System.out.println(itemDetails);
+        return "";
+    }
+
+    private DBObject getItem(String id) {
         MongoClient client = null;
         try {
             client = new MongoClient(SERVER_NAME , PORT_NUMBER);
@@ -33,7 +40,8 @@ public class NotifyBidders {
             e.printStackTrace();
         }
         DB db = client.getDB("AuctionItems");
-        System.out.println(db.getName());
+        DBCollection items = db.getCollection("items");
+        return items.findOne(new BasicDBObject("_id", id));
     }
 
     private String parseMessage(String message, String startTag, String endTag){

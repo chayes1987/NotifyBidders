@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e1053f6e-34ab-4790-acf9-fdd7063bac5e" name="Default" comment="Added Mongo .jar, Made connection to MongoDB from application">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NotifyBidders.iml" afterPath="$PROJECT_DIR$/NotifyBidders.iml" />
+    <list default="true" id="e1053f6e-34ab-4790-acf9-fdd7063bac5e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NotifyBidders.java" afterPath="$PROJECT_DIR$/src/NotifyBidders.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NotifyBidders.iws" />
@@ -34,8 +32,8 @@
       <file leaf-file-name="NotifyBidders.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NotifyBidders.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7360179" vertical-offset="28" max-vertical-offset="850">
-              <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+            <state vertical-scroll-proportion="0.20134228" vertical-offset="233" max-vertical-offset="986">
+              <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -382,7 +380,7 @@
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="ToolWindowManager">
     <frame x="800" y="0" width="800" height="860" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -428,7 +426,8 @@
     </option>
     <MESSAGE value="Added Mongo .jar, Made connection to MongoDB from application" />
     <MESSAGE value="Added JeroMQ jar, made connection to queue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added JeroMQ jar, made connection to queue" />
+    <MESSAGE value="Subscribed to NotifyBidder command, added parse function to get id and parameters from received message" />
+    <option name="LAST_COMMIT_MESSAGE" value="Subscribed to NotifyBidder command, added parse function to get id and parameters from received message" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -437,8 +436,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/NotifyBidders.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7360179" vertical-offset="28" max-vertical-offset="850">
-          <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.20134228" vertical-offset="233" max-vertical-offset="986">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

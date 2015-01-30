@@ -13,7 +13,16 @@ public class NotifyBidders {
         Context context = ZMQ.context(1);
         Socket subscriber = context.socket(ZMQ.SUB);
         subscriber.connect(SUBSCRIBER_ADDRESS);
-        System.out.println("Connected");
+        subscriber.connect(SUBSCRIBER_ADDRESS);
+        subscriber.subscribe("NotifyBidder".getBytes());
+        System.out.println("Subscribed to NotifyBidder command...");
+
+        while (true) {
+            String message = new String(subscriber.recv());
+            System.out.println("Received " + message + " command");
+            String id = parseMessage(message, "<id>", "</id>");
+            String emails = parseMessage(message, "<params>", "</params>");
+        }
     }
 
     private void connect(){
@@ -25,5 +34,11 @@ public class NotifyBidders {
         }
         DB db = client.getDB("AuctionItems");
         System.out.println(db.getName());
+    }
+
+    private String parseMessage(String message, String startTag, String endTag){
+        int startIndex = message.indexOf(startTag) + startTag.length();
+        String substring = message.substring(startIndex);
+        return substring.substring(0, substring.lastIndexOf(endTag));
     }
 }

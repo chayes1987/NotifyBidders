@@ -9,18 +9,18 @@ import org.jeromq.ZMQ.*;
  */
 
 public class NotifyBidders {
-    private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001",
-            PUBLISHER_ADDRESS = "tcp://127.0.0.1:1111";
-    private Context context;
+    private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001", PUBLISHER_ADDRESS = "tcp://127.0.0.1:1111";
+    private Context context = ZMQ.context(1);
+    private Socket stat_publisher = context.socket(ZMQ.PUB);
 
     public static void main(String[] args){ new NotifyBidders().subscribe(); }
 
     private void subscribe() {
-        context = ZMQ.context(1);
         Socket subscriber = context.socket(ZMQ.SUB);
         subscriber.connect(SUBSCRIBER_ADDRESS);
         subscriber.subscribe("NotifyBidder".getBytes());
         System.out.println("Subscribed to NotifyBidder command...");
+        stat_publisher.bind(PUBLISHER_ADDRESS);
 
         while (true) {
             String message = new String(subscriber.recv());
@@ -34,10 +34,8 @@ public class NotifyBidders {
     }
 
     private void publishAcknowledgement(String message){
-        Socket publisher = context.socket(ZMQ.PUB);
-        publisher.bind(PUBLISHER_ADDRESS);
         String msg = "ACK: " + message;
-        publisher.send(msg.getBytes());
+        stat_publisher.send(msg.getBytes());
         System.out.println("Acknowledgement sent...");
     }
 

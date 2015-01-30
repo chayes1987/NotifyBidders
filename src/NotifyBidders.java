@@ -1,11 +1,13 @@
 import com.mongodb.*;
 import java.net.UnknownHostException;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 import org.jeromq.ZMQ;
 import org.jeromq.ZMQ.*;
 
 public class NotifyBidders {
-    private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001", SERVER_NAME = "localhost";
-    private final int PORT_NUMBER = 27018;
+    private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001";
 
     public static void main(String[] args){ new NotifyBidders().subscribe(); }
 
@@ -22,26 +24,9 @@ public class NotifyBidders {
             System.out.println("Received " + message + " command");
             String id = parseMessage(message, "<id>", "</id>");
             String emails = parseMessage(message, "<params>", "</params>");
+            EmailSender emailSender = new EmailSender();
+            emailSender.sendEmails(id, emails);
         }
-    }
-
-    private String generateMessageBody(String id) {
-        DBObject item = getItem(id);
-        DBObject itemDetails = (DBObject)item.get("item");
-        System.out.println(itemDetails);
-        return "";
-    }
-
-    private DBObject getItem(String id) {
-        MongoClient client = null;
-        try {
-            client = new MongoClient(SERVER_NAME , PORT_NUMBER);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        DB db = client.getDB("AuctionItems");
-        DBCollection items = db.getCollection("items");
-        return items.findOne(new BasicDBObject("_id", id));
     }
 
     private String parseMessage(String message, String startTag, String endTag){

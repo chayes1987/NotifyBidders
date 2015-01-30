@@ -9,14 +9,15 @@ import org.jeromq.ZMQ.*;
  */
 
 public class NotifyBidders {
-    private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001";
+    private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001",
+            PUBLISHER_ADDRESS = "tcp://127.0.0.1:1111";
+    private Context context;
 
     public static void main(String[] args){ new NotifyBidders().subscribe(); }
 
     private void subscribe() {
-        Context context = ZMQ.context(1);
+        context = ZMQ.context(1);
         Socket subscriber = context.socket(ZMQ.SUB);
-        subscriber.connect(SUBSCRIBER_ADDRESS);
         subscriber.connect(SUBSCRIBER_ADDRESS);
         subscriber.subscribe("NotifyBidder".getBytes());
         System.out.println("Subscribed to NotifyBidder command...");
@@ -24,11 +25,19 @@ public class NotifyBidders {
         while (true) {
             String message = new String(subscriber.recv());
             System.out.println("Received " + message + " command");
+            publishAcknowledgement(message);
             String id = parseMessage(message, "<id>", "</id>");
             String emails = parseMessage(message, "<params>", "</params>");
             EmailSender emailSender = new EmailSender();
             emailSender.sendEmails(id, emails);
         }
+    }
+
+    private void publishAcknowledgement(String message){
+        Socket publisher = context.socket(ZMQ.PUB);
+        publisher.bind(PUBLISHER_ADDRESS);
+        publisher.send(message.getBytes());
+        System.out.println("Acknowledgement sent...");
     }
 
     private String parseMessage(String message, String startTag, String endTag){

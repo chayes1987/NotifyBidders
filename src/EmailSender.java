@@ -13,28 +13,23 @@ import java.util.Properties;
  */
 
 public class EmailSender {
-    private final String SERVER_NAME = "localhost";
-    private final int PORT_NUMBER = 27018;
-
     public void sendEmails(String id, String emails){
-        final String sender = "online.web.auctions@gmail.com";
-        final String senderPassword = "online.auctions";
         String messageBody = generateMessageBody(id);
         Properties props = getProperties();
         String[] addresses = emails.split(";");
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() { return new PasswordAuthentication(sender, senderPassword); }
+            protected PasswordAuthentication getPasswordAuthentication() { return new PasswordAuthentication(Constants.SENDER_EMAIL, Constants.SENDER_PASSWORD); }
         });
 
         for(String recipient : addresses){
             try {
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(sender));
+                message.setFrom(new InternetAddress(Constants.SENDER_EMAIL));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-                message.setSubject("Auction Starting");
+                message.setSubject(Constants.EMAIL_SUBJECT);
                 message.setText(messageBody);
                 Transport.send(message);
-                System.out.println("Email Sent to " + recipient);
+                System.out.println("EMAIL SENT: " + recipient);
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
@@ -44,26 +39,26 @@ public class EmailSender {
     private String generateMessageBody(String id) {
         DBObject item = getItem(id);
         DBObject itemDetails = (DBObject)item.get("item");
-        StringBuilder email = new StringBuilder();
-        email.append("Dear Bidder,\n\n");
-        email.append("The auction which you are registered for is about to begin.\n");
-        email.append("The item for auction is '" + itemDetails.get("name"));
-        email.append("'. The starting price for this item is €" + itemDetails.get("starting_bid"));
-        email.append(". Please login to the Online Auctions App to take part.\n\n");
-        email.append("Regards,\nOnline Auctions\n\n");
-        email.append("This email was generated automatically. Do not reply.");
-        return email.toString();
+        StringBuilder emailBody = new StringBuilder();
+        emailBody.append("Dear Bidder,\n\n");
+        emailBody.append("The auction which you are registered for is about to begin.\n");
+        emailBody.append("The item for auction is '" + itemDetails.get("name"));
+        emailBody.append("'. The starting price for this item is €" + itemDetails.get("starting_bid"));
+        emailBody.append(". Please login to the Online Auctions App to take part.\n\n");
+        emailBody.append("Regards,\nOnline Auctions\n\n");
+        emailBody.append("This email was generated automatically. Do not reply.");
+        return emailBody.toString();
     }
 
     private DBObject getItem(String id) {
         MongoClient client = null;
         try {
-            client = new MongoClient(SERVER_NAME , PORT_NUMBER);
+            client = new MongoClient(Constants.SERVER_NAME , Constants.PORT_NUMBER);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        DB db = client.getDB("AuctionItems");
-        DBCollection items = db.getCollection("items");
+        DB db = client.getDB(Constants.DATABASE_NAME);
+        DBCollection items = db.getCollection(Constants.COLLECTION_NAME);
         return items.findOne(new BasicDBObject("_id", id));
     }
 

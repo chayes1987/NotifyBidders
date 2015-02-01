@@ -9,34 +9,32 @@ import org.jeromq.ZMQ.*;
  */
 
 public class NotifyBidders {
-    private final String SUBSCRIBER_ADDRESS = "tcp://127.0.0.1:1001", PUBLISHER_ADDRESS = "tcp://127.0.0.1:1111";
-    private Context context = ZMQ.context(1);
-    private Socket stat_publisher = context.socket(ZMQ.PUB);
+    private Context context = ZMQ.context();
+    private Socket ackPublisher = context.socket(ZMQ.PUB);
 
     public static void main(String[] args){ new NotifyBidders().subscribe(); }
 
     private void subscribe() {
-        Socket subscriber = context.socket(ZMQ.SUB);
-        subscriber.connect(SUBSCRIBER_ADDRESS);
-        subscriber.subscribe("NotifyBidder".getBytes());
-        System.out.println("Subscribed to NotifyBidder command...");
-        stat_publisher.bind(PUBLISHER_ADDRESS);
+        Socket notifyBiddersSub = context.socket(ZMQ.SUB);
+        notifyBiddersSub.connect(Constants.RECEIVE_ADR);
+        notifyBiddersSub.subscribe(Constants.TOPIC.getBytes());
+        System.out.println("SUB: " + Constants.TOPIC);
+        ackPublisher.bind(Constants.SEND_ADR);
 
         while (true) {
-            String message = new String(subscriber.recv());
-            System.out.println("Received " + message + " command");
-            publishAcknowledgement(message);
-            String id = parseMessage(message, "<id>", "</id>");
-            String emails = parseMessage(message, "<params>", "</params>");
-            EmailSender emailSender = new EmailSender();
-            emailSender.sendEmails(id, emails);
+            String notifyBiddersCmd = new String(notifyBiddersSub.recv());
+            System.out.println("REC: " + notifyBiddersCmd);
+            publishAcknowledgement(notifyBiddersCmd);
+            String id = parseMessage(notifyBiddersCmd, "<id>", "</id>");
+            String emails = parseMessage(notifyBiddersCmd, "<params>", "</params>");
+            new EmailSender().sendEmails(id, emails);
         }
     }
 
     private void publishAcknowledgement(String message){
         String msg = "ACK: " + message;
-        stat_publisher.send(msg.getBytes());
-        System.out.println("Acknowledgement sent...");
+        ackPublisher.send(msg.getBytes());
+        System.out.println("\nACK SENT...");
     }
 
     private String parseMessage(String message, String startTag, String endTag){

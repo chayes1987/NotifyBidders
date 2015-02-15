@@ -7,7 +7,7 @@ public class Constants {
     public static final String SEND_ADR = "tcp://*:1010";
     public static final String TOPIC = "NotifyBidder";
     public static final String SERVER_NAME = "localhost";
-    public static final int PORT_NUMBER = 27018;
+    public static final int PORT_NUMBER = 27017;
     public static final String DATABASE_NAME = "AuctionItems";
     public static final String COLLECTION_NAME = "items";
     public static final String SENDER_EMAIL = "online.web.auctions@gmail.com";

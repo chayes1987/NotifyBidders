@@ -3,8 +3,8 @@
  */
 
 public class Constants {
-    public static final String RECEIVE_ADR = "tcp://172.31.32.21:1011";
-    public static final String SEND_ADR = "tcp://*:1010";
+    public static final String RECEIVE_ADR = "tcp://172.31.32.21:2100";
+    public static final String SEND_ADR = "tcp://*:2200";
     public static final String TOPIC = "NotifyBidder";
     public static final String SERVER_NAME = "localhost";
     public static final int PORT_NUMBER = 27017;

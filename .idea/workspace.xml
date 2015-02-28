@@ -70,8 +70,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9276596" vertical-offset="737" max-vertical-offset="1275">
-              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6680851" vertical-offset="213" max-vertical-offset="1275">
+              <caret line="31" column="76" selection-start-line="31" selection-start-column="76" selection-end-line="31" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -527,7 +527,8 @@
     <MESSAGE value="Finalized addressing for AWS" />
     <MESSAGE value="- Added config file in place of Constants class&#10;- Refactored code to reflect config&#10;- Minor formatting and checks added&#10;- Tested on AWS, successful" />
     <MESSAGE value="Renaming" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renaming" />
+    <MESSAGE value="Tidied up README" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tidied up README" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -793,8 +794,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9276596" vertical-offset="737" max-vertical-offset="1275">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6680851" vertical-offset="213" max-vertical-offset="1275">
+          <caret line="31" column="76" selection-start-line="31" selection-start-column="76" selection-end-line="31" selection-end-column="76" />
           <folding />
         </state>
       </provider>

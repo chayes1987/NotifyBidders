@@ -1,7 +1,6 @@
 import com.mongodb.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import java.net.UnknownHostException;
 import java.util.Properties;
 
 /*
@@ -13,20 +12,27 @@ import java.util.Properties;
  */
 
 public class EmailSender {
+    private Properties _config;
+
+    public EmailSender(Properties config){
+        this._config = config;
+    }
+
     public void sendEmails(String id, String emails){
         String messageBody = generateMessageBody(id);
-        Properties props = getProperties();
+        Properties props = getSmtpProperties();
         String[] addresses = emails.split(";");
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() { return new PasswordAuthentication(Constants.SENDER_EMAIL, Constants.SENDER_PASSWORD); }
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(_config.getProperty("SENDER_EMAIL"), _config.getProperty("SENDER_PASSWORD")); }
         });
 
         for(String recipient : addresses){
             try {
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(Constants.SENDER_EMAIL));
+                message.setFrom(new InternetAddress(_config.getProperty("SENDER_EMAIL")));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-                message.setSubject(Constants.EMAIL_SUBJECT);
+                message.setSubject(_config.getProperty("EMAIL_SUBJECT"));
                 message.setText(messageBody);
                 Transport.send(message);
                 System.out.println("EMAIL SENT: " + recipient);
@@ -38,31 +44,31 @@ public class EmailSender {
 
     private String generateMessageBody(String id) {
         DBObject item = getItem(id);
-        DBObject itemDetails = (DBObject)item.get("item");
-        StringBuilder emailBody = new StringBuilder();
-        emailBody.append("Dear Bidder,\n\n");
-        emailBody.append("The auction which you are registered for is about to begin.\n");
-        emailBody.append("The item for auction is '" + itemDetails.get("name"));
-        emailBody.append("'. The starting price for this item is €" + itemDetails.get("starting_bid"));
-        emailBody.append(". Please login to the Online Auctions App to take part.\n\n");
-        emailBody.append("Regards,\nOnline Auctions\n\n");
-        emailBody.append("This email was generated automatically. Do not reply.");
-        return emailBody.toString();
+        String message = "";
+        if (item != null) {
+            DBObject itemDetails = (DBObject) item.get("item");
+            message = String.format(_config.getProperty("EMAIL_BODY"), itemDetails.get("name"),
+                    itemDetails.get("starting_bid"));
+        }
+        return message;
     }
 
     private DBObject getItem(String id) {
-        MongoClient client = null;
+        MongoClient client;
+        DBCollection items;
         try {
-            client = new MongoClient(Constants.SERVER_NAME , Constants.PORT_NUMBER);
-        } catch (UnknownHostException e) {
+            client = new MongoClient(_config.getProperty("SERVER_NAME"),
+                    Integer.parseInt(_config.getProperty("PORT_NUMBER")));
+            DB db = client.getDB(_config.getProperty("DATABASE_NAME"));
+            items = db.getCollection(_config.getProperty("COLLECTION_NAME"));
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        DB db = client.getDB(Constants.DATABASE_NAME);
-        DBCollection items = db.getCollection(Constants.COLLECTION_NAME);
         return items.findOne(new BasicDBObject("_id", id));
     }
 
-    private Properties getProperties(){
+    private Properties getSmtpProperties(){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");

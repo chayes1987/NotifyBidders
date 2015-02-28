@@ -37,7 +37,7 @@ public class NotifyBidders {
 
     private void subscribe() {
         Socket notifyBiddersSub = _context.socket(ZMQ.SUB);
-        notifyBiddersSub.connect(_config.getProperty("RECEIVE_ADR"));
+        notifyBiddersSub.connect(_config.getProperty("SUB_ADR"));
         String topic = _config.getProperty("TOPIC");
         notifyBiddersSub.subscribe(topic.getBytes());
         System.out.println("SUB: " + topic);

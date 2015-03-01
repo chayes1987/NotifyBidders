@@ -55,9 +55,9 @@ public class NotifyBidders {
     }
 
     private void publishAcknowledgement(String message){
-        String msg = "ACK " + message;
-        _ackPublisher.send(msg.getBytes());
-        System.out.println("PUB: " + msg);
+        String acknowledgment = "ACK " + message;
+        _ackPublisher.send(acknowledgment.getBytes());
+        System.out.println("PUB: " + acknowledgment);
     }
 
     private String parseMessage(String message, String startTag, String endTag){

@@ -22,15 +22,17 @@ public class EmailSender {
         String messageBody = generateMessageBody(id);
         Properties props = getSmtpProperties();
         String[] addresses = emails.split(";");
+        String username = _config.getProperty("SENDER_EMAIL");
+        String password = _config.getProperty("SENDER_PASSWORD");
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(_config.getProperty("SENDER_EMAIL"), _config.getProperty("SENDER_PASSWORD")); }
+                return new PasswordAuthentication(username, password); }
         });
 
         for(String recipient : addresses){
             try {
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(_config.getProperty("SENDER_EMAIL")));
+                message.setFrom(new InternetAddress(username));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
                 message.setSubject(_config.getProperty("EMAIL_SUBJECT"));
                 message.setText(messageBody);
@@ -72,8 +74,8 @@ public class EmailSender {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", _config.getProperty("SMTP_HOST"));
+        props.put("mail.smtp.port", _config.getProperty("SMTP_PORT"));
         return props;
     }
 }

@@ -2,6 +2,7 @@ import org.jeromq.ZMQ;
 import org.jeromq.ZMQ.*;
 import java.io.FileInputStream;
 import java.util.Properties;
+import java.util.Scanner;
 
 /*
     @author Conor Hayes
@@ -15,12 +16,16 @@ public class NotifyBidders {
     private Context _context = ZMQ.context();
     private Socket _publisher = _context.socket(ZMQ.PUB);
     private static Properties _config;
+    private static String _password;
 
     public static void main(String[] args){
         NotifyBidders nb = new NotifyBidders();
         _config = nb.readConfig();
 
         if(_config != null)
+            System.out.println("Enter password: ");
+            Scanner input = new Scanner(System.in);
+            _password = input.nextLine();
             nb.subscribeToHeartbeat();
             nb.subscribe();
     }
@@ -50,7 +55,7 @@ public class NotifyBidders {
             publishAcknowledgement(notifyBiddersCmd);
             String id = parseMessage(notifyBiddersCmd, "<id>", "</id>");
             String emails = parseMessage(notifyBiddersCmd, "<params>", "</params>");
-            EmailSender sender = new EmailSender(_config);
+            EmailSender sender = new EmailSender(_config, _password);
             sender.sendEmails(id, emails);
         }
     }

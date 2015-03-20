@@ -13,9 +13,11 @@ import java.util.Properties;
 
 public class EmailSender {
     private Properties _config;
+    private String _password;
 
-    public EmailSender(Properties config){
+    public EmailSender(Properties config, String password){
         this._config = config;
+        this._password = password;
     }
 
     public void sendEmails(String id, String emails){
@@ -23,10 +25,9 @@ public class EmailSender {
         Properties props = getSmtpProperties();
         String[] addresses = emails.split(";");
         String username = _config.getProperty("SENDER_EMAIL");
-        String password = _config.getProperty("SENDER_PASSWORD");
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password); }
+                return new PasswordAuthentication(username, _password); }
         });
 
         for(String recipient : addresses){

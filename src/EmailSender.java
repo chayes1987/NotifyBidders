@@ -46,7 +46,7 @@ public class EmailSender {
     }
 
     private String generateMessageBody(String id) {
-        DBObject item = getItem(id);
+        DBObject item = DatabaseManager.getItem(id, _config);
         String message = "";
         if (item != null) {
             DBObject itemDetails = (DBObject) item.get("item");
@@ -54,21 +54,6 @@ public class EmailSender {
                     itemDetails.get("starting_bid"));
         }
         return message;
-    }
-
-    private DBObject getItem(String id) {
-        MongoClient client;
-        DBCollection items;
-        try {
-            client = new MongoClient(_config.getProperty("SERVER_NAME"),
-                    Integer.parseInt(_config.getProperty("PORT_NUMBER")));
-            DB db = client.getDB(_config.getProperty("DATABASE_NAME"));
-            items = db.getCollection(_config.getProperty("COLLECTION_NAME"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return items.findOne(new BasicDBObject("_id", id));
     }
 
     private Properties getSmtpProperties(){

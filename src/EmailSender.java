@@ -32,12 +32,12 @@ public class EmailSender {
 
         for(String recipient : addresses){
             try {
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(username));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-                message.setSubject(_config.getProperty("EMAIL_SUBJECT"));
-                message.setText(messageBody);
-                Transport.send(message);
+                Message email = new MimeMessage(session);
+                email.setFrom(new InternetAddress(username));
+                email.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
+                email.setSubject(_config.getProperty("EMAIL_SUBJECT"));
+                email.setText(messageBody);
+                Transport.send(email);
                 System.out.println("EMAIL SENT: " + recipient);
             } catch (MessagingException e) {
                 e.printStackTrace();

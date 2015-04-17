@@ -26,8 +26,8 @@ public class NotifyBidders {
             System.out.println("Enter password: ");
             Scanner input = new Scanner(System.in);
             _password = input.nextLine();
-            nb.subscribeToHeartbeat();
-            nb.subscribe();
+            nb.subToHeartbeat();
+            nb.subToNotifyBiddersCmd();
     }
 
     private Properties readConfig() {
@@ -41,12 +41,12 @@ public class NotifyBidders {
         return config;
     }
 
-    private void subscribe() {
+    private void subToNotifyBiddersCmd() {
         Socket notifyBiddersSub = _context.socket(ZMQ.SUB);
         notifyBiddersSub.connect(_config.getProperty("SUB_ADR"));
-        String topic = _config.getProperty("TOPIC");
-        notifyBiddersSub.subscribe(topic.getBytes());
-        System.out.println("SUB: " + topic);
+        String notifyBiddersTopic = _config.getProperty("TOPIC");
+        notifyBiddersSub.subscribe(notifyBiddersTopic.getBytes());
+        System.out.println("SUB: " + notifyBiddersTopic);
         _publisher.bind(_config.getProperty("ACK_ADR"));
 
         while (true) {
@@ -72,21 +72,21 @@ public class NotifyBidders {
         return substring.substring(0, substring.lastIndexOf(endTag));
     }
 
-    private void subscribeToHeartbeat(){
+    private void subToHeartbeat(){
         new Thread(
                 () -> {
-                    Socket subscriber = _context.socket(ZMQ.SUB);
-                    subscriber.connect(_config.getProperty("HEARTBEAT_ADR"));
-                    String topic = _config.getProperty("CHECK_HEARTBEAT_TOPIC");
-                    subscriber.subscribe(topic.getBytes());
+                    Socket heartbeatSub = _context.socket(ZMQ.SUB);
+                    heartbeatSub.connect(_config.getProperty("HEARTBEAT_ADR"));
+                    String heartbeatTopic = _config.getProperty("CHECK_HEARTBEAT_TOPIC");
+                    heartbeatSub.subscribe(heartbeatTopic.getBytes());
 
                     while(true){
-                        String checkHeartbeatEvt = new String(subscriber.recv());
+                        String checkHeartbeatEvt = new String(heartbeatSub.recv());
                         System.out.println("REC: " + checkHeartbeatEvt);
-                        String message = _config.getProperty("CHECK_HEARTBEAT_TOPIC_RESPONSE") +
+                        String heartbeatResponse = _config.getProperty("CHECK_HEARTBEAT_TOPIC_RESPONSE") +
                                 " <params>" + _config.getProperty("SERVICE_NAME") + "</params>";
-                        _publisher.send(message.getBytes());
-                        System.out.println("PUB: " + message);
+                        _publisher.send(heartbeatResponse.getBytes());
+                        System.out.println("PUB: " + heartbeatResponse);
                     }
                 }
         ).start();

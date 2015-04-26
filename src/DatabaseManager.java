@@ -1,12 +1,26 @@
 import com.mongodb.*;
 import java.util.Properties;
 
+/**
+ * @author Conor Hayes
+ */
+
 /*
-    @author Conor Hayes
+    Coding Standards -> http://www.oracle.com/technetwork/java/codeconvtoc-136057.html
     MongoDB -> http://docs.mongodb.org/ecosystem/tutorial/getting-started-with-java-driver/
+ */
+
+/**
+ * This class handles all database interaction
  */
 public class DatabaseManager {
 
+    /**
+     * Retrieve the item from the database
+     * @param id The ID of the auction
+     * @param config The configuration file
+     * @return The item
+     */
     public static DBObject getItem(String id, Properties config) {
         MongoClient client;
         DBCollection items;

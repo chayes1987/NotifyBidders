@@ -21,6 +21,7 @@ public class ZeroMqBroker implements IBroker {
 
     /**
      * Subscribes to the CheckHeartbeat command and publishes an acknowledgement
+     * @param config The configuration file
      */
     @Override
     public void subscribeToHeartbeat(Properties config) {
@@ -47,6 +48,8 @@ public class ZeroMqBroker implements IBroker {
 
     /**
      * Subscribes to the NotifyBidders command
+     * @param config The configuration file
+     * @param password The password
      */
     @Override
     public void subscribeToNotifyBiddersCmd(Properties config, String password) {

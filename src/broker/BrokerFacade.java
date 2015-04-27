@@ -4,7 +4,7 @@ import utils.Constants;
 
 /**
  * @author Conor Hayes
- *  Broker Facade
+ * Broker Facade
  */
 public class BrokerFacade {
     private static IBroker broker;

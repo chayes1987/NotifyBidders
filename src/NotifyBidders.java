@@ -30,9 +30,9 @@ public class NotifyBidders {
             Scanner input = new Scanner(System.in);
             String password = input.nextLine();
             // Create Pub/Sub manager
-            IBroker manager = BrokerFacade.getBroker();
-            manager.subscribeToHeartbeat(config);
-            manager.subscribeToNotifyBiddersCmd(config, password);
+            IBroker broker = BrokerFacade.getBroker();
+            broker.subscribeToHeartbeat(config);
+            broker.subscribeToNotifyBiddersCmd(config, password);
     }
 
     /**

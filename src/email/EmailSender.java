@@ -1,11 +1,11 @@
-import com.mongodb.*;
+package email;
+
+import database.DatabaseFacade;
+import database.IDatabase;
+import models.AuctionItem;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
-
-/**
- * @author Conor Hayes
- */
 
 /*
     Code for interacting with MongoDB and sending email
@@ -16,12 +16,18 @@ import java.util.Properties;
  */
 
 /**
- * This class handles creating and sending emails to the bidders
+ * @author Conor Hayes
+ * Email Sender
  */
 public class EmailSender {
     private Properties _config;
     private String _password;
 
+    /**
+     * Constructor
+     * @param config The configuration file
+     * @param password The password
+     */
     public EmailSender(Properties config, String password){
         this._config = config;
         this._password = password;
@@ -64,13 +70,12 @@ public class EmailSender {
      * @return The e-mail body
      */
     private String generateMessageBody(String id) {
-        DBObject item = DatabaseManager.getItem(id, _config);
+        IDatabase database = DatabaseFacade.getDatabase();
+        AuctionItem item = database.getItem(id, _config);
         String message = "";
         if (item != null) {
-            DBObject itemDetails = (DBObject) item.get("item");
             // Build message using item information and configuration file
-            message = String.format(_config.getProperty("EMAIL_BODY"), itemDetails.get("name"),
-                    itemDetails.get("starting_bid"));
+            message = String.format(_config.getProperty("EMAIL_BODY"), item.getName(), item.getStarting_bid());
         }
         return message;
     }

@@ -1,9 +1,8 @@
+package database;
+
 import com.mongodb.*;
 import java.util.Properties;
-
-/**
- * @author Conor Hayes
- */
+import models.AuctionItem;
 
 /*
     Coding Standards -> http://www.oracle.com/technetwork/java/codeconvtoc-136057.html
@@ -11,28 +10,34 @@ import java.util.Properties;
  */
 
 /**
- * This class handles all database interaction
+ * @author Conor Hayes
+ * Mongo Database
  */
-public class DatabaseManager {
+public class MongoDatabase implements IDatabase{
 
     /**
-     * Retrieve the item from the database
+     * Get Item
      * @param id The ID of the auction
      * @param config The configuration file
      * @return The item
      */
-    public static DBObject getItem(String id, Properties config) {
+    public AuctionItem getItem(String id, Properties config) {
         MongoClient client;
-        DBCollection items;
+        DBObject itemDetails;
         try {
             client = new MongoClient(config.getProperty("SERVER_NAME"),
                     Integer.parseInt(config.getProperty("PORT_NUMBER")));
             DB db = client.getDB(config.getProperty("DATABASE_NAME"));
-            items = db.getCollection(config.getProperty("COLLECTION_NAME"));
+            DBCollection items = db.getCollection(config.getProperty("COLLECTION_NAME"));
+            DBObject item = items.findOne(new BasicDBObject("_id", id));
+            itemDetails = (DBObject) item.get("item");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        return items.findOne(new BasicDBObject("_id", id));
+        String name = (String) itemDetails.get("name");
+        double starting_bid = (double) itemDetails.get("starting_bid");
+
+        return new AuctionItem(name, starting_bid);
     }
 }

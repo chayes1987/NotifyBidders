@@ -14,7 +14,7 @@ public class DatabaseFacade {
      * @return The database to be used
      */
     public static IDatabase getDatabase(){
-        if (Constants.DATABASE == DATABASE_TYPE.MongoDB){
+        if (Constants.DATABASE == Database_Type.MongoDB){
             database = new MongoDatabase();
         }
         // Other Databases may be added

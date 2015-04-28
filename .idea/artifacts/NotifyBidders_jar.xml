@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="NotifyBidders:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NotifyBidders_jar</output-path>
+    <root id="archive" name="NotifyBidders.jar">
+      <element id="module-output" name="NotifyBidders" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/jeromq-0.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/mongo-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javamail1_4_7/javamail-1.4.7/mail.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

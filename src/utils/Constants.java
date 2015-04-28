@@ -1,13 +1,13 @@
 package utils;
 
-import broker.MESSAGE_BROKER;
-import database.DATABASE_TYPE;
+import broker.Message_Broker;
+import database.Database_Type;
 
 /**
  * @author Conor Hayes
  * Constants class
  */
 public class Constants {
-    public static MESSAGE_BROKER BROKER = MESSAGE_BROKER.ZeroMq;
-    public static DATABASE_TYPE DATABASE = DATABASE_TYPE.MongoDB;
+    public static Message_Broker BROKER = Message_Broker.ZeroMq;
+    public static Database_Type DATABASE = Database_Type.MongoDB;
 }
